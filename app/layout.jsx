@@ -1,5 +1,7 @@
+import ContextWrapper from "../components/ContextWrapper";
 import "./globals.css"
 import '@fontsource-variable/crimson-pro';
+
 
 export const metadata = {
   title: 'Store App',
@@ -7,9 +9,16 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
+
+
  return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <ContextWrapper>
+        {children}
+        </ContextWrapper>
+        
+        </body>
     </html>
   )
 }

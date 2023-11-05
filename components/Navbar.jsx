@@ -6,8 +6,10 @@ import {AiOutlineShoppingCart} from 'react-icons/ai'
 import {BsPersonCircle} from 'react-icons/bs'
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useContext } from 'react';
+import UserContext from '../contexts/UserContext';
 
-function Navbar({cartCount}) {
+function Navbar() {
     const router = useRouter()
     const [backgroundColor, setBackgroundColor] = useState('#F6F6F6');
 
@@ -30,7 +32,8 @@ function Navbar({cartCount}) {
     }, []);
 
     return (
-        <>
+        <UserContext.Consumer>
+        {({user, setUser}) => (<>
         <div className="navbar" style={{backgroundColor, position: 'fixed', top: 0, zIndex: 1000}}>
             <div className="flex-1 ml-5">
                 <Image src={Logo} alt='logo' className='w-[120px] m-3'/>
@@ -40,12 +43,12 @@ function Navbar({cartCount}) {
                 <label tabIndex={0} className="btn btn-ghost btn-cir">
                 <div className="indicator">
                     <AiOutlineShoppingCart color='#FFCB74' size={30}/>
-                    <span className="badge badge-sm bg-[#2F2F2F] indicator-item text-white">{cartCount}</span>
+                    <span className="badge badge-sm bg-[#2F2F2F] indicator-item text-white">{user.cart == "" ? 0 : (JSON.parse(user.cart)).items.length}</span>
                 </div>
                 </label>
                 <div tabIndex={0} className="mt-2 z-[1] card card-compact dropdown-content w-52 bg-[#2F2F2F] shadow">
                     <div className="card-body">
-                        <span className="font-medium text-lg text-white">{cartCount}</span>
+                        <span className="font-medium text-lg text-white">{user.cart == "" ? 0 : (JSON.parse(user.cart)).items.length}</span>
                         <div className="card-actions">
                             <button onClick={() => router.push("/dashboard/cart")} className="btn bg-[#FFCB74] text-[#2F2F2F] btn-block ">View cart</button>
                         </div>
@@ -60,14 +63,15 @@ function Navbar({cartCount}) {
                 </label>
                     <ul tabIndex={0} className="menu menu-sm dropdown-content mt-2 z-[1] p-2 shadow bg-[#2F2F2F] text-white rounded-box w-52">
                         <li className='cursor-not-allowed disabled'>
-                            <p className="justify-between text-white">Rachelle's Profile</p>
+                            <p className="justify-between text-white">{`${user.username}'s Profile`}</p>
                         </li>
                         <li><Link href={"/"}>Logout</Link></li>
                     </ul>
             </div>
         </div>
         </div>
-        </>
+        </>)}
+        </UserContext.Consumer>
     )
 }
 

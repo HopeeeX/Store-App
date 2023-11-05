@@ -7,8 +7,8 @@ import Bag4 from "../../assets/images/bag4.jpeg";
 import Navbar from "../../components/Navbar";
 import Card from "../../components/Card";
 
+
 function Dashboard() {
-    const [cart, setCart] = useState([]); // Step 1: Add cart state
 
 
     const products = [
@@ -34,9 +34,7 @@ function Dashboard() {
     },
 ];
 
-    const addToCart = (item) => {
-        setCart([...cart, item]);
-};
+
 
     return (
         <>
@@ -49,7 +47,6 @@ function Dashboard() {
                         title={product.title}
                         description={product.description}
                         image={product.image}
-                        addToCart={addToCart} // Step 3: Pass the addToCart function
                         />))}
                     <div className="mb-[40px]"></div>
                 </div>
